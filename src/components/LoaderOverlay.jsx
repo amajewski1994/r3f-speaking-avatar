@@ -1,16 +1,9 @@
 import { useProgress } from "@react-three/drei";
-import { useEffect, useState } from "react";
 
 export default function LoaderOverlay() {
   const { active, progress } = useProgress();
-  const [forceVisible, setForceVisible] = useState(true);
 
-  useEffect(() => {
-    const t = setTimeout(() => setForceVisible(false), 3000);
-    return () => clearTimeout(t);
-  }, []);
-
-  if (!forceVisible && !active) return null;
+  if (!active) return null;
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center">
