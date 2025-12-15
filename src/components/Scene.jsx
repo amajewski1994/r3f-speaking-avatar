@@ -17,8 +17,14 @@ export default function Scene() {
         onIncline={() => setDegraded(false)}
       />
 
-      <ambientLight intensity={1} />
-      <directionalLight castShadow position={[5, 6, 5]} intensity={1} />
+      <ambientLight intensity={1.5} />
+      <directionalLight
+        castShadow
+        position={[5, 6, 5]}
+        intensity={1}
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+      />
 
       <Suspense fallback={null}>
         <Teacher position={[0, -2, 0]} scale={2} />
@@ -41,7 +47,7 @@ export default function Scene() {
       <OrbitControls
         minPolarAngle={Math.PI / 2}
         maxPolarAngle={Math.PI / 2}
-        minDistance={4}
+        minDistance={6.5}
         maxDistance={10}
         enableDamping
         enablePan={false}
