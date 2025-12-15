@@ -18,11 +18,16 @@ export default function Scene() {
       />
 
       <ambientLight intensity={1} />
-      <directionalLight position={[10, 10, 10]} intensity={1} />
+      <directionalLight castShadow position={[5, 6, 5]} intensity={1} />
 
       <Suspense fallback={null}>
         <Teacher position={[0, -2, 0]} scale={2} />
       </Suspense>
+
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]} receiveShadow>
+        <planeGeometry args={[20, 20]} />
+        <meshStandardMaterial color="#170a37" />
+      </mesh>
 
       <Environment
         frames={degraded ? 1 : Infinity}

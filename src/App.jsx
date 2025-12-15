@@ -6,6 +6,7 @@ export default function App() {
   return (
     <div className="w-screen h-screen">
       <Canvas
+        shadows
         camera={{ position: [0, 2, 6], fov: 60 }}
         className="w-full h-full"
         dpr={1}
