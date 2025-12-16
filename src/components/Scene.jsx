@@ -4,10 +4,10 @@ import {
   PerformanceMonitor,
 } from "@react-three/drei";
 import { Suspense, useState } from "react";
-import Teacher from "./Teacher";
+import Avatar from "./Avatar";
 import Lightformers from "./Lightformers";
 
-const Scene = ({ animation }) => {
+const Scene = () => {
   const [degraded, setDegraded] = useState(false);
 
   return (
@@ -27,7 +27,7 @@ const Scene = ({ animation }) => {
       />
 
       <Suspense fallback={null}>
-        <Teacher animation={animation} position={[0, -2, 0]} scale={2} />
+        <Avatar position={[0, -2, 0]} scale={2} />
       </Suspense>
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]} receiveShadow>
