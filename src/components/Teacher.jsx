@@ -1,5 +1,5 @@
 import { useGLTF, useFBX, useAnimations } from "@react-three/drei";
-import { useRef, useEffect, useMemo, useState } from "react";
+import { useRef, useEffect, useMemo } from "react";
 
 const Teacher = (props) => {
   const group = useRef();
@@ -25,8 +25,7 @@ const Teacher = (props) => {
 
   const { actions } = useAnimations(animations, group);
 
-  const [animation, setAnimation] = useState("Idle");
-  const current = animation;
+  const current = props.animation;
 
   // shadows
   useEffect(() => {

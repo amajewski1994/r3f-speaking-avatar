@@ -7,7 +7,7 @@ import { Suspense, useState } from "react";
 import Teacher from "./Teacher";
 import Lightformers from "./Lightformers";
 
-export default function Scene() {
+const Scene = ({ animation }) => {
   const [degraded, setDegraded] = useState(false);
 
   return (
@@ -27,7 +27,7 @@ export default function Scene() {
       />
 
       <Suspense fallback={null}>
-        <Teacher position={[0, -2, 0]} scale={2} />
+        <Teacher animation={animation} position={[0, -2, 0]} scale={2} />
       </Suspense>
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]} receiveShadow>
@@ -56,4 +56,6 @@ export default function Scene() {
       />
     </>
   );
-}
+};
+
+export default Scene;
