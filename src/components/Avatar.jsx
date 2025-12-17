@@ -7,6 +7,7 @@ import { useAvatar } from "../hooks/useAvatar";
 
 const Avatar = (props) => {
   const group = useRef();
+  const prevAnimation = useRef(null);
 
   const { scene } = useGLTF("/models/avatar.glb");
 
@@ -31,7 +32,7 @@ const Avatar = (props) => {
 
   const currentMessage = useAvatar((state) => state.currentMessage);
   const current = useAvatar((state) => state.avatarAnimation);
-  const clearCurrentMessage = useAvatar((s) => s.clearCurrentMessage);
+  const stopSpeaking = useAvatar((s) => s.stopSpeaking);
 
   // shadows
   useEffect(() => {
@@ -45,10 +46,17 @@ const Avatar = (props) => {
 
   // animations
   useEffect(() => {
-    const action = actions?.[current];
+    if (!actions || !current) return;
+
+    const action = actions[current];
     if (!action) return;
 
+    if (prevAnimation.current === current) {
+      action.stop();
+    }
+
     action.reset().fadeIn(0.2).play();
+    prevAnimation.current = current;
 
     return () => {
       action.fadeOut(0.2);
@@ -81,19 +89,39 @@ const Avatar = (props) => {
   useFrame(() => {
     lerpMorphTarget(visemesValues[0], 0.05);
 
-    if (currentMessage?.visemes?.length && currentMessage.startedAt != null) {
-      const elapsedMs = performance.now() - currentMessage.startedAt;
+    if (!currentMessage) return;
 
+    if (
+      currentMessage.visemes &&
+      currentMessage.startedAt &&
+      !currentMessage.audioPlayer
+    ) {
+      const elapsedMs = performance.now() - currentMessage.startedAt;
       const endMs =
         currentMessage.visemes[currentMessage.visemes.length - 1][0] + 150;
+
       if (elapsedMs > endMs) {
-        clearCurrentMessage();
+        stopSpeaking();
         return;
       }
 
       for (let i = currentMessage.visemes.length - 1; i >= 0; i--) {
         const [ms, visemeId] = currentMessage.visemes[i];
         if (elapsedMs >= ms) {
+          lerpMorphTarget(visemesValues[visemeId], 0.2);
+          break;
+        }
+      }
+      return;
+    }
+
+    // AUDIO
+    if (currentMessage.audioPlayer && currentMessage.visemes) {
+      const tMs = currentMessage.audioPlayer.currentTime * 1000;
+
+      for (let i = currentMessage.visemes.length - 1; i >= 0; i--) {
+        const [ms, visemeId] = currentMessage.visemes[i];
+        if (tMs >= ms) {
           lerpMorphTarget(visemesValues[visemeId], 0.2);
           break;
         }

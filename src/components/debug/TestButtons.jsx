@@ -3,7 +3,8 @@ import { useAvatar } from "../../hooks/useAvatar";
 const mockMessage = {
   id: 0,
   question: "Test",
-  answer: "OK",
+  answer:
+    "Hello, my name is Adrian and I’ll tell you a little about myself. Of course, this is not my real appearance, but only a generated model. Choose one of the questions and I will answer it.",
   visemes: [
     [0, 0],
     [120, 4],
@@ -30,12 +31,13 @@ const mockMessage = {
 };
 
 const TestButtons = () => {
-  const setCurrentMessage = useAvatar((s) => s.setCurrentMessage);
-  const setAvatarAnimation = useAvatar((s) => s.setAvatarAnimation);
+  const playMessage = useAvatar((s) => s.playMessage);
 
   const startTest = () => {
-    setCurrentMessage({ ...mockMessage, startedAt: performance.now() });
-    setAvatarAnimation(Math.random() < 0.5 ? "Talking0" : "Talking1");
+    playMessage({
+      id: Date.now(),
+      answer: mockMessage.answer,
+    });
   };
 
   return (
