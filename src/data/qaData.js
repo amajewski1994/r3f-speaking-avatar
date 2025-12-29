@@ -30,6 +30,12 @@ const qaData = [
     answer:
       "The projects that excite me the most are AR games. Creating games in augmented reality allows me to experiment with new ideas and interactions. One of my AR games received an award in the 8th Wall Game Jam competition, which was a great motivation for me to continue developing projects in this area.",
   },
+  {
+    id: 5,
+    question: "Where do you see yourself in the future?",
+    answer:
+      "I would like to continue working on AR effects using JavaScript, especially React Three Fiber, as this is what I enjoy the most. I would also like to further develop as a Full Stack developer using NodeJS, which I already have some experience with.",
+  },
 ];
 
 export {startData, qaData}

@@ -77,6 +77,16 @@ const Scene = ({ started }) => {
               fadeDelay={0.75}
               fadeDuration={0.55}
             />
+            <FloatingQuestionPlane
+              text={qaData[4].question}
+              position={[-0.25, 2.5, 0]}
+              floatSpeed={0.75}
+              floatAmplitude={0.17}
+              onSelect={() => playMessage(qaData[4])}
+              fadeIn
+              fadeDelay={1.0}
+              fadeDuration={0.55}
+            />
           </>
         )}
       </Suspense>
