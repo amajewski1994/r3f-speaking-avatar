@@ -5,15 +5,22 @@ import { MathUtils } from "three";
 import { visemesValues } from "../data/visemes";
 import { useAvatar } from "../hooks/useAvatar";
 
+const BASE = import.meta.env.BASE_URL;
+
+const AVATAR_GLB = `${BASE}models/avatar.glb`;
+const TALKING0_FBX = `${BASE}animations/Talking0.fbx`;
+const TALKING1_FBX = `${BASE}animations/Talking1.fbx`;
+const IDLE_FBX = `${BASE}animations/Idle.fbx`;
+
 const Avatar = (props) => {
   const group = useRef();
   const prevAnimation = useRef(null);
 
-  const { scene } = useGLTF("/models/avatar.glb");
+  const { scene } = useGLTF(AVATAR_GLB);
 
-  const { animations: talking0 } = useFBX("/animations/Talking0.fbx");
-  const { animations: talking1 } = useFBX("/animations/Talking1.fbx");
-  const { animations: idle } = useFBX("/animations/Idle.fbx");
+  const { animations: talking0 } = useFBX(TALKING0_FBX);
+  const { animations: talking1 } = useFBX(TALKING1_FBX);
+  const { animations: idle } = useFBX(IDLE_FBX);
 
   const animations = useMemo(() => {
     const t0 = talking0[0].clone();
@@ -136,6 +143,6 @@ const Avatar = (props) => {
   );
 };
 
-useGLTF.preload("/models/avatar.glb");
+useGLTF.preload(AVATAR_GLB);
 
 export default Avatar;
