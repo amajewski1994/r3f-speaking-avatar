@@ -1,4 +1,11 @@
-export const qaData = [
+const startData = {
+    id: 0,
+    question: null,
+    answer:
+      "Hello, my name is Adrian, and I'd like to tell you a little about myself. This is not my real appearance, but a generated model. Choose one of the questions, and I'll answer it.",
+  }
+
+const qaData = [
   {
     id: 1,
     question: "How did your journey with programming begin?",
@@ -24,3 +31,5 @@ export const qaData = [
       "The projects that excite me the most are AR games. Creating games in augmented reality allows me to experiment with new ideas and interactions. One of my AR games received an award in the 8th Wall Game Jam competition, which was a great motivation for me to continue developing projects in this area.",
   },
 ];
+
+export {startData, qaData}

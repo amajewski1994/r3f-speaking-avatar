@@ -1,9 +1,13 @@
 @import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  :where(*, *::before, *::after) {
+    box-sizing: border-box;
+  }
+
+  :where(html, body) {
+    margin: 0;
+  }
 }
 
 html, body, #root {

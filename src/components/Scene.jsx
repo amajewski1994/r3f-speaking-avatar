@@ -10,7 +10,7 @@ import FloatingQuestionPlane from "./FloatingPlane";
 import { useAvatar } from "../hooks/useAvatar";
 import { qaData } from "../data/qaData";
 
-const Scene = () => {
+const Scene = ({ started }) => {
   const [degraded, setDegraded] = useState(false);
   const playMessage = useAvatar((s) => s.playMessage);
 
@@ -34,37 +34,52 @@ const Scene = () => {
         <Avatar position={[0, -2, 0]} scale={2} />
       </Suspense>
 
-      <FloatingQuestionPlane
-        text={qaData[0].question}
-        position={[-1.75, 1.25, 0]}
-        floatSpeed={0.8}
-        floatAmplitude={0.1}
-        onSelect={() => playMessage(qaData[0])}
-      />
-
-      <FloatingQuestionPlane
-        text={qaData[1].question}
-        position={[-1.95, -0.1, 0]}
-        floatSpeed={1.4}
-        floatAmplitude={0.05}
-        onSelect={() => playMessage(qaData[1])}
-      />
-
-      <FloatingQuestionPlane
-        text={qaData[2].question}
-        position={[2.3, 0, 0]}
-        floatSpeed={1.1}
-        floatAmplitude={0.22}
-        onSelect={() => playMessage(qaData[2])}
-      />
-
-      <FloatingQuestionPlane
-        text={qaData[3].question}
-        position={[1.6, 1.6, 0]}
-        floatSpeed={0.6}
-        floatAmplitude={0.12}
-        onSelect={() => playMessage(qaData[3])}
-      />
+      <Suspense fallback={null}>
+        {started && (
+          <>
+            <FloatingQuestionPlane
+              text={qaData[0].question}
+              position={[-1.75, 1.25, 0]}
+              floatSpeed={0.8}
+              floatAmplitude={0.1}
+              onSelect={() => playMessage(qaData[0])}
+              fadeIn
+              fadeDelay={0.0}
+              fadeDuration={0.55}
+            />
+            <FloatingQuestionPlane
+              text={qaData[1].question}
+              position={[-1.95, -0.1, 0]}
+              floatSpeed={1.4}
+              floatAmplitude={0.05}
+              onSelect={() => playMessage(qaData[1])}
+              fadeIn
+              fadeDelay={0.25}
+              fadeDuration={0.55}
+            />
+            <FloatingQuestionPlane
+              text={qaData[2].question}
+              position={[2.3, 0, 0]}
+              floatSpeed={1.1}
+              floatAmplitude={0.22}
+              onSelect={() => playMessage(qaData[2])}
+              fadeIn
+              fadeDelay={0.5}
+              fadeDuration={0.55}
+            />
+            <FloatingQuestionPlane
+              text={qaData[3].question}
+              position={[1.6, 1.6, 0]}
+              floatSpeed={0.6}
+              floatAmplitude={0.12}
+              onSelect={() => playMessage(qaData[3])}
+              fadeIn
+              fadeDelay={0.75}
+              fadeDuration={0.55}
+            />
+          </>
+        )}
+      </Suspense>
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]} receiveShadow>
         <planeGeometry args={[20, 20]} />
