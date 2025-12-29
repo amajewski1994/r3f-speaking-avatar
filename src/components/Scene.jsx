@@ -44,7 +44,7 @@ const Scene = ({ started }) => {
               floatAmplitude={0.1}
               onSelect={() => playMessage(qaData[0])}
               fadeIn
-              fadeDelay={0.0}
+              fadeDelay={9}
               fadeDuration={0.55}
             />
             <FloatingQuestionPlane
@@ -54,7 +54,7 @@ const Scene = ({ started }) => {
               floatAmplitude={0.05}
               onSelect={() => playMessage(qaData[1])}
               fadeIn
-              fadeDelay={0.25}
+              fadeDelay={9.5}
               fadeDuration={0.55}
             />
             <FloatingQuestionPlane
@@ -64,7 +64,7 @@ const Scene = ({ started }) => {
               floatAmplitude={0.22}
               onSelect={() => playMessage(qaData[2])}
               fadeIn
-              fadeDelay={0.5}
+              fadeDelay={10}
               fadeDuration={0.55}
             />
             <FloatingQuestionPlane
@@ -74,7 +74,7 @@ const Scene = ({ started }) => {
               floatAmplitude={0.12}
               onSelect={() => playMessage(qaData[3])}
               fadeIn
-              fadeDelay={0.75}
+              fadeDelay={10.5}
               fadeDuration={0.55}
             />
             <FloatingQuestionPlane
@@ -84,7 +84,7 @@ const Scene = ({ started }) => {
               floatAmplitude={0.17}
               onSelect={() => playMessage(qaData[4])}
               fadeIn
-              fadeDelay={1.0}
+              fadeDelay={11}
               fadeDuration={0.55}
             />
           </>
