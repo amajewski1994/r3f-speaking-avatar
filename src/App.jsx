@@ -2,6 +2,7 @@ import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import Scene from "./components/Scene";
 import StartButton from "./components/StartButton";
+import AudioLoadingOverlay from "./components/AudioLoadingOverlay";
 import { useState } from "react";
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
   return (
     <div className="w-screen h-screen">
       <StartButton onStarted={() => setStarted(true)} />
+      <AudioLoadingOverlay />
       <Canvas
         shadows
         camera={{ position: [0, 2, 6], fov: 60 }}

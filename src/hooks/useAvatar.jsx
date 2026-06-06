@@ -41,10 +41,12 @@ export const useAvatar = create((set, get) => ({
     }
 
     const speakingId = Date.now();
+    const nextAnimation = Math.random() < 0.5 ? "Talking0" : "Talking1";
+
     set({
       speakingId,
       inFlightMessageId: message.id,
-      avatarAnimation: Math.random() < 0.5 ? "Talking0" : "Talking1",
+      avatarAnimation: "Idle",
       currentMessage: message,
     });
 
@@ -54,7 +56,7 @@ export const useAvatar = create((set, get) => ({
 
         const baseUrl = import.meta.env.VITE_API_URL;
         const url = `${baseUrl}/api/text-to-speech?text=${encodeURIComponent(
-          message.answer
+          message.answer,
         )}`;
 
         const audioRes = await fetch(url);
@@ -83,7 +85,7 @@ export const useAvatar = create((set, get) => ({
         set((state) => ({
           loading: false,
           messages: state.messages.map((m) =>
-            m.id === updated.id ? updated : m
+            m.id === updated.id ? updated : m,
           ),
           currentMessage: updated,
         }));
@@ -95,6 +97,16 @@ export const useAvatar = create((set, get) => ({
 
       message.audioPlayer.currentTime = 0;
       await message.audioPlayer.play();
+
+      if (get().speakingId !== speakingId) return;
+
+      set({
+        avatarAnimation: nextAnimation,
+        currentMessage: {
+          ...message,
+          startedAt: performance.now(),
+        },
+      });
     } catch (err) {
       console.error("playMessage error:", err);
 
