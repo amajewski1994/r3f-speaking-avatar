@@ -22,19 +22,19 @@ const qaData = [
     id: 3,
     question: "What technologies do you enjoy working with the most?",
     answer:
-      "I enjoy working with augmented reality technologies the most. I like creating interactive and immersive experiences, especially using tools like Three.js, A-Frame, and other AR platforms. I also work with React Three Fiber, which is used in this application. Working with AR allows me to combine creativity with programming, and that is what I enjoy the most.",
+      "I enjoy working with frontend technologies, particularly React and modern JavaScript frameworks. I like building intuitive and interactive user interfaces, with a strong focus on user experience and performance. I am also passionate about augmented reality and 3D development, using technologies such as React Three Fiber and Three js to create engaging and immersive applications.",
   },
   {
     id: 4,
     question: "What kind of projects excite you the most?",
     answer:
-      "The projects that excite me the most are AR games. Creating games in augmented reality allows me to experiment with new ideas and interactions. One of my AR games received an award in the 8th Wall Game Jam competition, which was a great motivation for me to continue developing projects in this area.",
+      "The projects that excite me the most are AR games. Creating games in augmented reality allows me to experiment with new ideas and interactions. One of my AR games received an award in the Snap Games Lensathon competition, which was a great motivation for me to continue developing projects in this area.",
   },
   {
     id: 5,
     question: "Where do you see yourself in the future?",
     answer:
-      "I would like to continue working on AR effects using JavaScript, especially React Three Fiber, as this is what I enjoy the most. I would also like to further develop as a Full Stack developer using NodeJS, which I already have some experience with.",
+      "In the future, I see myself specializing in frontend development, particularly within the React ecosystem. I enjoy creating interactive user interfaces, 3D experiences, and AR applications using technologies like React Three Fiber. My goal is to become a stronger frontend engineer, focusing on scalable architecture, performance, and user experience, while keeping some exposure to Node js and full stack development.",
   },
 ];
 
