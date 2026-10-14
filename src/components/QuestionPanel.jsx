@@ -1,7 +1,7 @@
 import QuestionCard from "./QuestionCard";
 import { useAvatar } from "../hooks/useAvatar";
 import { qaData } from "../data/qaData";
-import { CARD_ACCENTS, CARD_APPEAR_STAGGER, cardState } from "../data/layout";
+import { CARD_ACCENTS, CARD_APPEAR_DELAY, CARD_APPEAR_STAGGER, cardState } from "../data/layout";
 
 // Compact (phone / portrait) layout: questions as a list docked at the bottom.
 const QuestionPanel = ({ visible }) => {
@@ -22,7 +22,7 @@ const QuestionPanel = ({ visible }) => {
           icon={q.icon}
           accent={CARD_ACCENTS[q.id]}
           visible={visible}
-          appearDelay={i * CARD_APPEAR_STAGGER}
+          appearDelay={CARD_APPEAR_DELAY + i * CARD_APPEAR_STAGGER}
           state={cardState(q.id, playingId)}
           onSelect={() => playMessage(q)}
         />

@@ -1,27 +1,41 @@
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import Scene from "./components/Scene";
-import StartButton from "./components/StartButton";
+import WelcomeScreen from "./components/WelcomeScreen";
 import AudioLoadingOverlay from "./components/AudioLoadingOverlay";
 import QuestionPanel from "./components/QuestionPanel";
 import { useCompactLayout } from "./hooks/useCompactLayout";
-import { CARDS_APPEAR_AFTER_MS } from "./data/layout";
-import { useEffect, useState } from "react";
+import { useAvatar } from "./hooks/useAvatar";
+import { startData } from "./data/qaData";
+import { useCallback, useRef, useState } from "react";
 
 export default function App() {
-  const [started, setStarted] = useState(false);
-  const [cardsVisible, setCardsVisible] = useState(false);
+  // "welcome" -> "intro" (holographic reveal) -> "ready"; it never goes back,
+  // so the introduction plays once per page load.
+  const [phase, setPhase] = useState("welcome");
+  const [avatarLoaded, setAvatarLoaded] = useState(false);
+  const handleAvatarLoaded = useCallback(() => setAvatarLoaded(true), []);
+  const introSpoken = useRef(false);
   const compact = useCompactLayout();
 
-  useEffect(() => {
-    if (!started) return;
-    const timer = setTimeout(() => setCardsVisible(true), CARDS_APPEAR_AFTER_MS);
-    return () => clearTimeout(timer);
-  }, [started]);
+  const handleEnter = () => {
+    if (phase !== "welcome" || !avatarLoaded) return;
+    const { unlockAudio, preloadMessage } = useAvatar.getState();
+    unlockAudio();
+    preloadMessage(startData); // fetch while the reveal plays
+    setPhase("intro");
+  };
+
+  // Called by the reveal effect once the avatar is fully visible.
+  const handleRevealComplete = useCallback(() => {
+    if (introSpoken.current) return;
+    introSpoken.current = true;
+    setPhase("ready");
+    useAvatar.getState().playMessage(startData);
+  }, []);
 
   return (
     <div className="w-screen h-screen bg-[#07051a]">
-      <StartButton onStarted={() => setStarted(true)} />
       <AudioLoadingOverlay />
       <Canvas
         shadows
@@ -30,10 +44,20 @@ export default function App() {
         dpr={1}
         gl={{ antialias: true, powerPreference: "high-performance" }}
       >
-        <Scene started={started} cardsVisible={cardsVisible} compact={compact} />
+        <Scene
+          phase={phase}
+          onAvatarLoaded={handleAvatarLoaded}
+          onRevealComplete={handleRevealComplete}
+          compact={compact}
+        />
       </Canvas>
       <div className="scene-vignette" aria-hidden="true" />
-      {compact && <QuestionPanel visible={cardsVisible} />}
+      {compact && <QuestionPanel visible={phase === "ready"} />}
+      <WelcomeScreen
+        ready={avatarLoaded}
+        leaving={phase !== "welcome"}
+        onEnter={handleEnter}
+      />
     </div>
   );
 }

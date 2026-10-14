@@ -1,6 +1,6 @@
-// Delay after START before the questions show up (the intro is still playing).
-export const CARDS_APPEAR_AFTER_MS = 9000;
-export const CARD_APPEAR_STAGGER = 0.45;
+// Cards ease in once the avatar's reveal has finished (seconds).
+export const CARD_APPEAR_DELAY = 0.6;
+export const CARD_APPEAR_STAGGER = 0.3;
 
 // Card placement around the avatar for the wide layout, keyed by question id.
 export const CARD_LAYOUT = {

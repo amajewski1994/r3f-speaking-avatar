@@ -144,5 +144,8 @@ const Avatar = (props) => {
 };
 
 useGLTF.preload(AVATAR_GLB);
+useFBX.preload(TALKING0_FBX);
+useFBX.preload(TALKING1_FBX);
+useFBX.preload(IDLE_FBX);
 
 export default Avatar;

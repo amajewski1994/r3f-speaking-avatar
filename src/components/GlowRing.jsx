@@ -49,6 +49,9 @@ const GlowRing = ({ started }) => {
   const fadeRef = useRef(0);
   const talkRef = useRef(0);
   const startedRef = useRef(started);
+  const waveRef = useRef();
+  const waveMat = useRef();
+  const waveStart = useRef(null);
   useEffect(() => {
     startedRef.current = started;
   }, [started]);
@@ -59,6 +62,18 @@ const GlowRing = ({ started }) => {
 
   useFrame(({ clock }, delta) => {
     if (startedRef.current) fadeRef.current = Math.min(1, fadeRef.current + delta * 0.8);
+
+    // one soft light wave rolling out from the centre when the platform activates
+    if (startedRef.current && waveStart.current === null) waveStart.current = clock.getElapsedTime();
+    if (waveRef.current && waveMat.current) {
+      const w = waveStart.current === null ? 1 : (clock.getElapsedTime() - waveStart.current) / 1.6;
+      waveRef.current.visible = w < 1;
+      if (w < 1) {
+        const e = 1 - Math.pow(1 - w, 3);
+        waveRef.current.scale.setScalar(0.3 + e * 2.9);
+        waveMat.current.opacity = 0.7 * (1 - w) * Math.min(1, w * 6);
+      }
+    }
 
     const talking = useAvatar.getState().avatarAnimation !== "Idle";
     talkRef.current += ((talking ? 1 : 0) - talkRef.current) * Math.min(1, delta * 3);
@@ -120,6 +135,12 @@ const GlowRing = ({ started }) => {
         <mesh position={[0, 0, 0.002]} renderOrder={2}>
           <ringGeometry args={[PLATFORM_RADIUS - 0.018, PLATFORM_RADIUS + 0.004, 160]} />
           <meshBasicMaterial ref={layer("rim")} color="#8b9cff" {...additive} />
+        </mesh>
+
+        {/* activation wave */}
+        <mesh ref={waveRef} position={[0, 0, 0.004]} visible={false} renderOrder={4}>
+          <planeGeometry args={[2 / RING_GLOW_PEAK, 2 / RING_GLOW_PEAK]} />
+          <meshBasicMaterial ref={waveMat} map={haloTex} color="#8b9cff" opacity={0} {...additive} />
         </mesh>
 
         {HALOS.map(([r, color], i) => {

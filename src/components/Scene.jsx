@@ -1,6 +1,6 @@
 import { Environment, OrbitControls, Sparkles } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useCallback, useEffect, useRef } from "react";
 import Avatar from "./Avatar";
 import Lightformers from "./Lightformers";
 import FloatingQuestionPlane from "./FloatingPlane";
@@ -8,9 +8,10 @@ import GlowRing from "./GlowRing";
 import OrbitLines from "./OrbitLines";
 import Backdrop, { HORIZON_COLOR } from "./Backdrop";
 import Atmosphere from "./Atmosphere";
+import HoloReveal from "./HoloReveal";
 import { useAvatar } from "../hooks/useAvatar";
 import { qaData } from "../data/qaData";
-import { CARD_APPEAR_STAGGER, CARD_LAYOUT, cardState } from "../data/layout";
+import { CARD_APPEAR_DELAY, CARD_APPEAR_STAGGER, CARD_LAYOUT, cardState } from "../data/layout";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
@@ -51,7 +52,27 @@ const ViewShift = ({ amount }) => {
   return null;
 };
 
-const Scene = ({ started, cardsVisible, compact }) => {
+// Mounts only once everything inside its Suspense boundary has loaded.
+const LoadedSignal = ({ onLoaded }) => {
+  useEffect(() => {
+    onLoaded?.();
+  }, [onLoaded]);
+  return null;
+};
+
+// phase: "welcome" (avatar hidden) -> "intro" (holographic reveal) -> "ready"
+const Scene = ({ phase, onAvatarLoaded, onRevealComplete, compact }) => {
+  const started = phase !== "welcome";
+  const cardsVisible = phase === "ready";
+  const keyLight = useRef();
+  const avatarGroup = useRef();
+
+  // The avatar appears once the scan starts (not during the platform pulse) and
+  // its shadow materialises together with it.
+  const handleRevealProgress = useCallback((p, scanning) => {
+    if (avatarGroup.current && scanning) avatarGroup.current.visible = true;
+    if (keyLight.current) keyLight.current.shadow.intensity = p;
+  }, []);
   const playMessage = useAvatar((s) => s.playMessage);
   const playingId = useAvatar((s) => s.currentMessage?.id ?? null);
   const size = useThree((s) => s.size);
@@ -68,6 +89,7 @@ const Scene = ({ started, cardsVisible, compact }) => {
 
       <ambientLight intensity={1.2} />
       <directionalLight
+        ref={keyLight}
         castShadow
         position={[5, 6, 5]}
         intensity={0.8}
@@ -102,16 +124,21 @@ const Scene = ({ started, cardsVisible, compact }) => {
         position={[0, 0.8, -3]}
       />
 
-      <Suspense fallback={null}>
-        <Avatar position={[0, -2, 0]} scale={2} />
-      </Suspense>
+      {/* hidden until the intro; the reveal effect materialises it */}
+      <group ref={avatarGroup} visible={false}>
+        <Suspense fallback={null}>
+          <Avatar position={[0, -2, 0]} scale={2} />
+          <LoadedSignal onLoaded={onAvatarLoaded} />
+        </Suspense>
+      </group>
+      <HoloReveal active={started} onProgress={handleRevealProgress} onComplete={onRevealComplete} />
 
       <GlowRing started={started} />
 
       <FollowCamera>
         <Backdrop />
         <Atmosphere />
-        {!compact && <OrbitLines visible={started} />}
+        {!compact && <OrbitLines visible={cardsVisible} />}
 
         {!compact &&
           qaData.map((q, i) => {
@@ -124,7 +151,7 @@ const Scene = ({ started, cardsVisible, compact }) => {
                 {...float}
                 uiScale={uiScale}
                 visible={cardsVisible}
-                appearDelay={i * CARD_APPEAR_STAGGER}
+                appearDelay={CARD_APPEAR_DELAY + i * CARD_APPEAR_STAGGER}
                 state={cardState(q.id, playingId)}
                 onSelect={() => playMessage(q)}
               />
