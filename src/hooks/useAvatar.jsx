@@ -54,7 +54,15 @@ export const useAvatar = create((set, get) => ({
       if (!message.audioPlayer) {
         set({ loading: true });
 
-        const baseUrl = import.meta.env.VITE_API_URL;
+        const baseUrl = import.meta.env.DEV
+          ? import.meta.env.VITE_API_URL_DEV
+          : import.meta.env.VITE_API_URL;
+        if (!baseUrl) {
+          throw new Error(
+            `Missing ${import.meta.env.DEV ? "VITE_API_URL_DEV" : "VITE_API_URL"}`,
+          );
+        }
+
         const url = `${baseUrl}/api/text-to-speech?text=${encodeURIComponent(
           message.answer,
         )}`;
