@@ -464,10 +464,10 @@ body {
     z-index: 20;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-height: 46vh;
+    gap: 8px;
+    max-height: 52vh;
     overflow-y: auto;
-    padding: 28px 16px max(16px, env(safe-area-inset-bottom));
+    padding: 24px 16px max(14px, env(safe-area-inset-bottom));
     background: linear-gradient(to top, rgba(7, 5, 26, 0.88) 55%, transparent);
     pointer-events: none;
   }
@@ -479,7 +479,7 @@ body {
   .qcard--compact {
     width: 100%;
     gap: 12px;
-    padding: 9px 14px 9px 9px;
+    padding: 8px 14px 8px 8px;
     border-radius: 16px;
     font-size: 14px;
   }

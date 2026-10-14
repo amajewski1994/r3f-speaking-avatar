@@ -68,6 +68,7 @@ const HoloReveal = ({ active, onProgress, onComplete }) => {
   const pointsMat = useRef();
   const startRef = useRef(null);
   const doneRef = useRef(false);
+  const finishedRef = useRef(false);
   const callbacks = useRef({ onProgress, onComplete });
   useEffect(() => {
     callbacks.current = { onProgress, onComplete };
@@ -96,8 +97,8 @@ const HoloReveal = ({ active, onProgress, onComplete }) => {
     const t = clock.getElapsedTime();
     if (startRef.current === null) startRef.current = t;
     const elapsed = t - startRef.current;
-    // finished and faded out: nothing left to animate
-    if (doneRef.current && elapsed > REVEAL_LEAD + REVEAL_DURATION + FADE_OUT + 0.1) return;
+    // finished and the faded-out state already applied: nothing left to animate
+    if (finishedRef.current) return;
 
     const raw = THREE.MathUtils.clamp((elapsed - REVEAL_LEAD) / REVEAL_DURATION, 0, 1);
     const p = ease(raw);
@@ -144,6 +145,10 @@ const HoloReveal = ({ active, onProgress, onComplete }) => {
       pos.needsUpdate = true;
     }
     if (pointsMat.current) pointsMat.current.opacity = 0.75 * fx;
+
+    // only stop once a frame with fx = 0 has been applied — on slow frames the
+    // fade-out can be skipped over entirely
+    if (after >= FADE_OUT) finishedRef.current = true;
   });
 
   if (!active) return null;

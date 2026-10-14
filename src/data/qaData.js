@@ -2,7 +2,7 @@ const startData = {
     id: 0,
     question: null,
     answer:
-      "Hello, my name is Adrian, and I'd like to tell you a little about myself. This is not my real appearance, but a generated model. Choose one of the questions, and I'll answer it.",
+      "Hey! I'm Adrian, welcome to my interactive portfolio! As you can probably tell, this isn't exactly what I look like in real life. It's my digital avatar! Feel free to pick a question and get to know me a little better.",
   }
 
 const qaData = [
@@ -11,35 +11,42 @@ const qaData = [
     icon: "code",
     question: "How did your journey with programming begin?",
     answer:
-      "My journey with programming began with a strong personal interest. I have always enjoyed programming. I started by taking online courses in HTML, CSS, and JavaScript. Later, I moved on to the React framework. After that, I focused on AR development and worked with technologies such as ThreeJS, A-Frame, 8th Wall, Lens Studio, and Effect House. I continue to work in AR development to this day, and I really enjoy it.",
+      "It all started with curiosity. I began learning HTML, CSS, and JavaScript through online courses, and eventually discovered React. Later, I got into augmented reality, experimenting with technologies like Three.js, A-Frame, and Lens Studio. Over time, my interests expanded into game development, and I started creating games using Unity, Unreal Engine 5, and Roblox. More recently, I've also been exploring how AI can help me bring creative ideas to life.",
   },
   {
     id: 2,
     icon: "gamepad",
     question: "What are your hobbies?",
     answer:
-      "In my free time, I like staying active and playing sports, especially football. I am a big FC Barcelona fan and I watch all of their matches. I also enjoy watching good movies and series. My favorite movies are Inglourious Basterds and Shutter Island, and lately I have been really into The Witcher. I also like playing board games.",
+      "Outside of coding, I'm a big football fan, especially FC Barcelona. I try to stay active and play sports whenever I can. I also love a good movie or series. Some of my favorites are Inglourious Basterds and Shutter Island, and recently I've been really into The Witcher. Oh, and I enjoy board games too!",
   },
   {
     id: 3,
     icon: "laptop",
     question: "What technologies do you enjoy working with the most?",
     answer:
-      "I enjoy working with frontend technologies, particularly React and modern JavaScript frameworks. I like building intuitive and interactive user interfaces, with a strong focus on user experience and performance. I am also passionate about augmented reality and 3D development, using technologies such as React Three Fiber and Three js to create engaging and immersive applications.",
+      "React and Three.js are definitely among my favorites. I love creating interactive interfaces and immersive 3D experiences. I'm also really interested in game development, working with Unity, Unreal Engine 5, and Roblox. Recently, I've been exploring AI powered tools to speed up development, experiment with new ideas, and build things that would normally take much longer to create.",
   },
   {
     id: 4,
     icon: "bulb",
     question: "What kind of projects excite you the most?",
     answer:
-      "The projects that excite me the most are AR games. Creating games in augmented reality allows me to experiment with new ideas and interactions. One of my AR games received an award in the Snap Games Lensathon competition, which was a great motivation for me to continue developing projects in this area.",
+      "Definitely projects that combine creativity, technology, and interactivity, especially AR and game development. I love building experiences that people can actually play and interact with. One of my AR games even won an award at the Snap Games Lensathon competition, which was a really exciting moment for me. I'm also fascinated by how AI is changing game development and making it easier to turn ambitious ideas into playable experiences.",
   },
   {
     id: 5,
     icon: "target",
     question: "Where do you see yourself in the future?",
     answer:
-      "In the future, I see myself specializing in frontend development, particularly within the React ecosystem. I enjoy creating interactive user interfaces, 3D experiences, and AR applications using technologies like React Three Fiber. My goal is to become a stronger frontend engineer, focusing on scalable architecture, performance, and user experience, while keeping some exposure to Node js and full stack development.",
+      "I see myself continuing to grow as a frontend engineer, especially within the React ecosystem, while also exploring game development, 3D, and AI. I want to keep building creative, interactive experiences and become better at developing scalable, high-performance applications. I'm especially excited about how AI can change the way we build software and games, and I'd love to be part of that evolution.",
+  },
+  {
+    id: 6,
+    icon: "brain",
+    question: "How do you use AI in your projects?",
+    answer:
+      "AI has become a really exciting part of my development workflow. I use it to explore ideas, solve problems, and speed up the process of building applications and games. It's especially interesting when working with Unity, Unreal Engine 5, or Roblox, because it allows me to experiment and prototype much faster. I see AI as a powerful creative tool that helps me learn new technologies and bring ideas to life.",
   },
 ];
 

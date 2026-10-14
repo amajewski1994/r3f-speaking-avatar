@@ -84,7 +84,7 @@ const Scene = ({ phase, onAvatarLoaded, onRevealComplete, compact }) => {
 
   return (
     <>
-      <ViewShift amount={compact && cardsVisible ? 0.24 : 0} />
+      <ViewShift amount={compact && cardsVisible ? 0.26 : 0} />
       <fog attach="fog" args={[HORIZON_COLOR, 9, 28]} />
 
       <ambientLight intensity={1.2} />

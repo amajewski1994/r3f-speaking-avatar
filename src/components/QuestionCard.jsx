@@ -1,4 +1,5 @@
 import {
+  BrainIcon,
   BulbIcon,
   ChevronIcon,
   CodeIcon,
@@ -13,6 +14,7 @@ const questionIcons = {
   laptop: LaptopIcon,
   bulb: BulbIcon,
   target: TargetIcon,
+  brain: BrainIcon,
 };
 
 const SpeakingBars = () => (
