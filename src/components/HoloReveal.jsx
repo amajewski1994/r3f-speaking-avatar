@@ -2,11 +2,9 @@ import * as THREE from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { getRadialGlow } from "../utils/glowTextures";
+import { REVEAL_DURATION, REVEAL_LEAD, revealEase } from "../data/revealTimeline";
 
-// Timeline (seconds from the click): the platform pulses first, then the scan
-// sweeps up the avatar. onComplete fires once, when the avatar is fully visible.
-export const REVEAL_LEAD = 0.9;
-export const REVEAL_DURATION = 3.2;
+// onComplete fires once, when the avatar is fully visible.
 const FADE_OUT = 0.9;
 
 const SCAN_FROM = -1.97; // just above the platform rings, at the avatar's feet
@@ -21,7 +19,6 @@ const SEEDS = Array.from({ length: PARTICLES }, () => ({
   speed: 0.2 + Math.random() * 0.5,
 }));
 
-const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
 const shellVertex = /* glsl */ `
   varying vec3 vNormal;
@@ -101,7 +98,7 @@ const HoloReveal = ({ active, onProgress, onComplete }) => {
     if (finishedRef.current) return;
 
     const raw = THREE.MathUtils.clamp((elapsed - REVEAL_LEAD) / REVEAL_DURATION, 0, 1);
-    const p = ease(raw);
+    const p = revealEase(raw);
     const scanY = THREE.MathUtils.lerp(SCAN_FROM, SCAN_TO, p);
 
     // visibility of the effect: in during the lead, out after completion

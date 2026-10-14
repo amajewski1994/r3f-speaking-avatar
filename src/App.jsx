@@ -7,6 +7,7 @@ import QuestionPanel from "./components/QuestionPanel";
 import { useCompactLayout } from "./hooks/useCompactLayout";
 import { useAvatar } from "./hooks/useAvatar";
 import { startData } from "./data/qaData";
+import { playRevealSfx } from "./audio/revealSfx";
 import { useCallback, useRef, useState } from "react";
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
     if (phase !== "welcome" || !avatarLoaded) return;
     const { unlockAudio, preloadMessage } = useAvatar.getState();
     unlockAudio();
+    playRevealSfx(); // in sync with the holographic reveal
     preloadMessage(startData); // fetch while the reveal plays
     setPhase("intro");
   };
